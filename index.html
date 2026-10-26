@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A simple personal expense tracker for recording income and expenses." />
+  <title>BillBuddy — OG Expense Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#top" aria-label="BillBuddy home"><span class="brand-mark">₹</span><span>Bill<span class="brand-light">Buddy</span></span></a>
+      <p class="nav-label">WORKSPACE</p>
+      <a class="nav-item active" href="#dashboard"><span>▦</span> Dashboard</a>
+      <a class="nav-item" href="#transactions"><span>↕</span> Transactions</a>
+      <a class="nav-item" href="#split-bills"><span>⇄</span> Split bills</a>
+      <a class="nav-item" href="#insights"><span>◔</span> Insights</a>
+      <div class="sidebar-bottom">
+        <div class="tip-card"><div class="tip-icon">✦</div><strong>Small steps add up</strong><p>Track your spending regularly to understand where your money goes.</p></div>
+        <div class="profile"><div class="avatar">BB</div><div><strong>My Wallet</strong><small>Personal account</small></div><span class="profile-dots">•••</span></div>
+      </div>
+    </aside>
+
+    <main class="main-content" id="top">
+      <header class="topbar"><div><p class="eyebrow">YOUR MONEY, IN FOCUS</p><h1>Dashboard</h1></div><div class="topbar-right"><span class="date-pill" id="todayLabel">Today</span><button class="primary-btn" id="openAddBtn">＋ Add transaction</button></div></header>
+
+      <section class="welcome-row" id="dashboard"><div><h2>Welcome back 👋</h2><p>Here’s a snapshot of your personal finances.</p></div><div class="month-control"><label for="monthFilter">Viewing</label><input type="month" id="monthFilter" /></div></section>
+
+      <section class="summary-grid" aria-label="Financial summary">
+        <article class="summary-card balance-card"><div class="card-top"><span>Total balance</span><span class="card-symbol">₹</span></div><div class="amount" id="balanceAmount">₹0.00</div><div class="card-foot"><span class="status-dot"></span><span>Income minus expenses</span></div><div class="balance-decoration"></div></article>
+        <article class="summary-card"><div class="card-top"><span>Total income</span><span class="metric-icon income-icon">↙</span></div><div class="amount" id="incomeAmount">₹0.00</div><div class="card-foot"><span class="trend up">↗</span><span>For selected month</span></div></article>
+        <article class="summary-card"><div class="card-top"><span>Total expenses</span><span class="metric-icon expense-icon">↗</span></div><div class="amount" id="expenseAmount">₹0.00</div><div class="card-foot"><span class="trend down">↘</span><span>For selected month</span></div></article>
+        <article class="summary-card"><div class="card-top"><span>Savings rate</span><span class="metric-icon savings-icon">％</span></div><div class="amount" id="savingsRate">0%</div><div class="progress-track"><span id="savingsProgress"></span></div><div class="card-foot"><span>Income saved this month</span></div></article>
+      </section>
+
+      <section class="content-grid" id="insights">
+        <article class="panel spending-panel"><div class="panel-heading"><div><h3>Spending overview</h3><p>Your expense breakdown by category</p></div><span class="soft-badge" id="categoryCount">0 categories</span></div><div class="chart-area"><div class="donut-wrap"><div class="donut" id="donutChart"><div class="donut-center"><strong id="donutTotal">₹0</strong><span>spent</span></div></div></div><div class="legend" id="categoryLegend"><div class="empty-state small-empty">Add expenses to see your breakdown.</div></div></div></article>
+        <article class="panel activity-panel"><div class="panel-heading"><div><h3>Recent activity</h3><p>Your latest money moves</p></div><a class="text-link" href="#transactions">View all ↗</a></div><div id="recentList" class="recent-list"><div class="empty-state">No transactions yet.<br />Add your first transaction to get started.</div></div></article>
+      </section>
+
+      <section class="panel split-bills-panel" id="split-bills">
+        <div class="panel-heading transaction-heading"><div><h3>Split a bill</h3><p>Share group expenses and keep track of who owes whom</p></div><span class="soft-badge">Split bills</span></div>
+        <div class="split-summary-grid">
+          <article class="split-summary-card"><span>Open bills</span><strong id="openBillCount">0</strong></article>
+          <article class="split-summary-card"><span>Total open amount</span><strong id="openBillTotal">₹0.00</strong></article>
+          <article class="split-summary-card"><span>People involved</span><strong id="splitPeopleCount">0</strong></article>
+        </div>
+        <form id="splitBillForm" class="split-form">
+          <div class="field"><label for="billTitle">Bill description</label><input id="billTitle" maxlength="70" required placeholder="e.g. Dinner, trip, groceries" /></div>
+          <div class="field-row"><div class="field"><label for="billGroup">Group</label><input id="billGroup" maxlength="50" required placeholder="e.g. College friends" value="General" /></div><div class="field"><label for="yourName">Your name <span class="optional">(optional)</span></label><input id="yourName" maxlength="40" placeholder="e.g. Prayag" /><small class="field-help">If your name is among the participants, only your share is added to personal expenses.</small></div></div>
+          <div class="field-row"><div class="field"><label for="billAmount">Total amount (₹)</label><input id="billAmount" type="number" min="0.01" step="0.01" required placeholder="0.00" /></div><div class="field"><label for="billPayer">Paid by</label><input id="billPayer" maxlength="40" required placeholder="e.g. Prayag" /></div></div>
+          <div class="field"><label for="billPeople">Participants</label><input id="billPeople" required placeholder="Prayag, Rahul, Simran" /><small class="field-help">Enter names separated by commas. Include everyone sharing the bill, including the person who paid.</small></div>
+          <div class="field-row"><div class="field"><label for="billDate">Date</label><input id="billDate" type="date" required /></div><div class="field"><label for="billCategory">Category</label><select id="billCategory"><option>Food</option><option>Travel</option><option>Shopping</option><option>Household</option><option>Entertainment</option><option>Other</option></select></div></div>
+          <div class="split-form-footer"><p>Each participant's share will be split equally. You can mark a bill settled later.</p><button class="primary-btn" type="submit">＋ Add split bill</button></div>
+        </form>
+        <div class="split-list-heading"><h3>Your group bills</h3><div class="split-list-tools"><label class="group-filter-label">Group <select id="groupFilter"><option value="all">All groups</option></select></label><button class="secondary-btn" id="exportSplitBtn" type="button">⇩ Export split bills</button></div></div>
+        <div id="splitBillList" class="split-bill-list"><div class="empty-state">No split bills yet. Add a group expense above to get started.</div></div>
+        <div class="settlement-panel"><div class="panel-heading"><div><h3>Who owes whom?</h3><p>Record full settlements to update balances and keep a payment history</p></div><button class="secondary-btn" id="exportSettlementBtn" type="button">⇩ Export settlement history</button></div><div id="settlementList" class="settlement-list"><div class="empty-state">Your settlement summary will appear here.</div></div><div class="history-heading"><h3>Settlement history</h3><span class="soft-badge" id="settlementCount">0 payments</span></div><div id="settlementHistoryList" class="settlement-history-list"><div class="empty-state">No settlements recorded yet.</div></div></div>
+      </section>
+
+      <section class="panel transactions-panel" id="transactions"><div class="panel-heading transaction-heading"><div><h3>Transactions</h3><p>Keep track of every rupee</p></div><button class="secondary-btn" id="exportBtn">⇩ Export CSV</button></div><div class="toolbar"><label class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="Search transactions..." /></label><select id="typeFilter" aria-label="Filter by transaction type"><option value="all">All types</option><option value="income">Income</option><option value="expense">Expenses</option></select><select id="categoryFilter" aria-label="Filter by category"><option value="all">All categories</option></select></div><div class="table-wrap"><table><thead><tr><th>TRANSACTION</th><th>CATEGORY</th><th>DATE</th><th>TYPE</th><th class="right">AMOUNT</th><th></th></tr></thead><tbody id="transactionRows"></tbody></table><div id="tableEmpty" class="empty-state table-empty">No transactions match your filters.</div></div><div class="table-footer"><span id="rowCount">Showing 0 transactions</span><button class="clear-btn" id="clearAllBtn">Clear all data</button></div></section>
+      <footer>Made for mindful money management <span>•</span> Data saved to your MySQL database</footer>
+    </main>
+  </div>
+
+  <dialog id="transactionDialog" class="transaction-dialog"><form id="transactionForm" method="dialog"><div class="dialog-heading"><div><p class="eyebrow">YOUR WALLET</p><h2 id="dialogTitle">Add transaction</h2></div><button type="button" class="close-btn" id="closeDialogBtn" aria-label="Close">×</button></div><input type="hidden" id="transactionId" /><div class="field"><label>Transaction type</label><div class="type-toggle"><label><input type="radio" name="type" value="expense" checked /><span>− Expense</span></label><label><input type="radio" name="type" value="income" /><span>＋ Income</span></label></div></div><div class="field"><label for="titleInput">Title</label><input id="titleInput" maxlength="60" required placeholder="e.g. Grocery shopping" /></div><div class="field-row"><div class="field"><label for="amountInput">Amount (₹)</label><input id="amountInput" type="number" min="0.01" step="0.01" required placeholder="0.00" /></div><div class="field"><label for="dateInput">Date</label><input id="dateInput" type="date" required /></div></div><div class="field"><label for="categoryInput">Category</label><select id="categoryInput" required><option value="Food">Food</option><option value="Transport">Transport</option><option value="Shopping">Shopping</option><option value="Bills">Bills</option><option value="Health">Health</option><option value="Education">Education</option><option value="Entertainment">Entertainment</option><option value="Salary">Salary</option><option value="Freelance">Freelance</option><option value="Other">Other</option></select></div><div class="field"><label for="noteInput">Note <span class="optional">(optional)</span></label><textarea id="noteInput" rows="2" maxlength="160" placeholder="Add a short note..."></textarea></div><div class="dialog-actions"><button type="button" class="secondary-btn" id="cancelDialogBtn">Cancel</button><button type="submit" class="primary-btn" id="saveTransactionBtn">Save transaction</button></div></form></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
